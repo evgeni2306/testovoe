@@ -4,9 +4,9 @@ declare(strict_types=1);
 use yii\db\Migration;
 
 
-class m221105_150601_create_tags_table extends Migration
+class m221105_149826_create_products_table extends Migration
 {
-    const TABLE_NAME = 'tags';
+    const TABLE_NAME = 'products';
 
     public function safeUp(): void
     {
@@ -17,7 +17,7 @@ class m221105_150601_create_tags_table extends Migration
 
         ]);
         $this->addForeignKey(
-            'tags-users',
+            'products-users',
             self::TABLE_NAME,
             'creator_id',
             'users',
@@ -25,12 +25,13 @@ class m221105_150601_create_tags_table extends Migration
         );
     }
 
+
     public function safeDown(): void
     {
         $this->dropTable(self::TABLE_NAME);
-//        $this->dropForeignKey(
-//            'creator_id',
-//            'users'
-//        );
+        $this->dropForeignKey(
+            'creator_id',
+            'users'
+        );
     }
 }
