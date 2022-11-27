@@ -14,6 +14,7 @@ class m221105_149826_create_products_table extends Migration
             'id' => $this->primaryKey(),
             'creator_id'=>$this->integer(),
             'name' => $this->text()->notNull(),
+            'price'=>$this->decimal()->notNull()
 
         ]);
         $this->addForeignKey(

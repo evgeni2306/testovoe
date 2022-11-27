@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Product $model */
+/** @var app\models\Tag $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="product-search">
+<div class="tag-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'name') ?>
-    <?= $form->field($model, 'price') ?>
+<!--    --><?//= $form->field($model, 'price') ?>
 
 
     <div class="form-group">

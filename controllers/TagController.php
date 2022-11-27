@@ -1,18 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
 namespace app\controllers;
 
-use app\models\Product;
-
-use app\models\ProductSearch;
+use app\models\Tag;
+use app\models\TagSearch;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 
-class ProductController extends Controller
+class TagController extends Controller
 {
     public function behaviors()
     {
@@ -31,7 +29,7 @@ class ProductController extends Controller
 
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = new TagSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -45,12 +43,11 @@ class ProductController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-
     }
 
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new Tag();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -89,7 +86,7 @@ class ProductController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Product::findOne(['id' => $id])) !== null) {
+        if (($model = Tag::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
