@@ -30,7 +30,5 @@ class Product extends ActiveRecord
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
             ->viaTable('productTags', ['product_id' => 'id']);
-
-
     }
 }
