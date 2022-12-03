@@ -31,12 +31,9 @@ class ProductController extends Controller
 
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $models = Product::getAll();
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'models'=>$models,
         ]);
     }
 

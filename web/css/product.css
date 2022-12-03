@@ -1,0 +1,48 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-row-gap: 100px;
+}
+
+.gridItem {
+    border: 1px solid #989a9b;
+}
+
+.gridTag {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.tag {
+    background: #bde9b2;
+    border-radius: 100px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.actionButton {
+    text-decoration: none;
+    color: #d4d3d3;
+}
+
+.viewButton {
+    background: green;
+
+}
+
+.updateButton {
+    background: #db8c0c;
+
+}
+
+.deleteButton {
+    background: red;
+
+}
+
+a:hover {
+    color: #ffffff;
+    text-decoration: none;
+rgba(0,0,0,.5)
+}
