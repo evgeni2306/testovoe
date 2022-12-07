@@ -11,11 +11,12 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 
 class ProductController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(
             parent::behaviors(),
@@ -30,7 +31,7 @@ class ProductController extends Controller
         );
     }
 
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $models = Product::getAll();
         return $this->render('index', [
@@ -38,7 +39,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionView($id)
+    public function actionView($id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -46,7 +47,7 @@ class ProductController extends Controller
 
     }
 
-    public function actionCreate()
+    public function actionCreate(): string|Response
     {
         $model = new Product();
 
@@ -63,7 +64,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate($id): string|Response
     {
         $model = $this->findModel($id);
 
@@ -76,18 +77,22 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionSearch()
+    public function actionSearch(): string
     {
         $get = Yii::$app->request->get();
         $model = new ProductSearch();
         $model->attributes = $get;
-        if ($model->validate()){
-            $model->searchProduct();
+        if ($model->validate()) {
+            $products = $model->searchProduct();
+            return $this->render('index', [
+                'models' => $products,
+            ]);
         }
+
 
     }
 
-    public function actionDelete($id)
+    public function actionDelete($id): Response
     {
 
         $this->findModel($id)->delete();
@@ -96,7 +101,7 @@ class ProductController extends Controller
     }
 
 
-    protected function findModel($id)
+    protected function findModel($id): Product
     {
         if (($model = Product::findOne(['id' => $id])) !== null) {
             return $model;

@@ -29,7 +29,7 @@ $this->registerCssFile("@web/css/product.css", [], 'css-print-theme');
     <form method="get" action="search">
         <div class="grid">
 
-            <input name="id" type="text" class="inputField">
+            <input name="id" type="text" placeholder="Введите id" class="inputField">
             <input name="name" type="text" placeholder="Введите имя" class="inputField">
             <input name="price" type="text" placeholder="Введите цену" class="inputField">
             <input name="tag" type="text" placeholder="Введите тэг" class="inputField">

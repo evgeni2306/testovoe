@@ -26,7 +26,7 @@ class Product extends ActiveRecord
         ];
     }
 
-    static function getAll()
+    static function getAll():array
     {
 
         $models = (new \yii\db\Query())

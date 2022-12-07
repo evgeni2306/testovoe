@@ -25,22 +25,33 @@ class ProductSearch extends Model
         ];
     }
 
-    public function searchProduct()
+    public function searchProduct():array
     {
         $products = (new \yii\db\Query())
-            ->select('products.id')
+            ->select('products.id,products.name,price,products.id as tags ')
             ->from('products')
             ->join('left join', 'producttags', 'products.id=product_id')
             ->join('left join', 'tags', 'tags.id=tag_id')
             ->filterWhere([
                 'products.id' => $this->id,
-                'products.name' => $this->name,
                 'price' => $this->price,
-                'tags.name' => $this->tag,
+            ])
+            ->andFilterWhere(['like', 'products.name', $this->name])
+            ->andFilterWhere(['like', 'tags.name', $this->tag])
+            ->distinct()->all();
 
-            ])->distinct()->all();
 
-        dd($products);
+        foreach ($products as &$model) {
+            $model['tags'] = (new \yii\db\Query())
+                ->select('tags.name')
+                ->from('tags')
+                ->join('left join', 'producttags', 'tags.id=tag_id')
+                ->where(['product_id' => $model['id']])
+                ->all();
+
+        }
+        return $products;
+//        dd($products);
 //        $models = (new \yii\db\Query())
 //            ->select('id,name,price,id as tags ')
 //            ->from('products')
