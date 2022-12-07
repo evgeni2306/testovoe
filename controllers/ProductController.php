@@ -7,6 +7,7 @@ namespace app\controllers;
 use app\models\Product;
 
 use app\models\ProductSearch;
+use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,7 +34,7 @@ class ProductController extends Controller
     {
         $models = Product::getAll();
         return $this->render('index', [
-            'models'=>$models,
+            'models' => $models,
         ]);
     }
 
@@ -73,6 +74,17 @@ class ProductController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionSearch()
+    {
+        $get = Yii::$app->request->get();
+        $model = new ProductSearch();
+        $model->attributes = $get;
+        if ($model->validate()){
+            $model->searchProduct();
+        }
+
     }
 
     public function actionDelete($id)

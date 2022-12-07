@@ -26,14 +26,9 @@ class Product extends ActiveRecord
         ];
     }
 
-    public function getTags()
-    {
-        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
-            ->viaTable('productTags', ['product_id' => 'id']);
-    }
-
     static function getAll()
     {
+
         $models = (new \yii\db\Query())
             ->select('id,name,price,id as tags ')
             ->from('products')

@@ -11,10 +11,10 @@ use yii\grid\GridView;
 
 $this->title = 'Продукты';
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/product.css", [], 'css-print-theme');
 ?>
-<link rel="stylesheet" href="css/product.css">
-<div class="product-index">
 
+<div class="product-index">
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a('Добавить продукт', ['create'], ['class' => 'btn btn-success']) ?>
@@ -26,11 +26,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="gridItem">tags</div>
         <div class="gridItem">actions</div>
     </div>
+    <form method="get" action="search">
+        <div class="grid">
+
+            <input name="id" type="text" class="inputField">
+            <input name="name" type="text" placeholder="Введите имя" class="inputField">
+            <input name="price" type="text" placeholder="Введите цену" class="inputField">
+            <input name="tag" type="text" placeholder="Введите тэг" class="inputField">
+            <input value="Поиск" type='submit' class="inputField">
+
+        </div>
+    </form>
     <? foreach ($models as $model) { ?>
         <div class="grid">
             <div class="gridItem"><?= Html::encode($model['id']) ?></div>
             <div class="gridItem"><?= Html::encode($model['name']) ?></div>
-            <div class="gridItem"><?= Html::encode($model['price']) ?></div>
+            <div class="gridItem"><?= Html::encode($model['price']) . ' Р' ?></div>
             <div class="gridItem gridTag ">
                 <? foreach ($model['tags'] as $tag) { ?>
                     <div class='tag'><? echo $tag['name'] ?></div>

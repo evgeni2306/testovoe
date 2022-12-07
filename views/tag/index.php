@@ -8,7 +8,6 @@ use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var app\models\Tag $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Тэги';
 $this->params['breadcrumbs'][] = $this->title;
