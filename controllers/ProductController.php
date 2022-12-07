@@ -82,12 +82,13 @@ class ProductController extends Controller
         $get = Yii::$app->request->get();
         $model = new ProductSearch();
         $model->attributes = $get;
+        $products = [];
         if ($model->validate()) {
             $products = $model->searchProduct();
-            return $this->render('index', [
-                'models' => $products,
-            ]);
         }
+        return $this->render('index', [
+            'models' => $products,
+        ]);
 
 
     }
