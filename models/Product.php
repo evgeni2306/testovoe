@@ -26,22 +26,10 @@ class Product extends ActiveRecord
         ];
     }
 
-    static function getAll():array
+    public function getTags()
     {
-
-        $models = (new \yii\db\Query())
-            ->select('id,name,price,id as tags ')
-            ->from('products')
-            ->all();
-        foreach ($models as &$model) {
-            $model['tags'] = (new \yii\db\Query())
-                ->select('name')
-                ->from('tags')
-                ->join('left join', 'producttags', 'tags.id=tag_id')
-                ->where(['product_id' => $model['id']])
-                ->all();
-
-        }
-        return $models;
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
+            ->viaTable('producttags', ['product_id' => 'id']);
     }
+
 }

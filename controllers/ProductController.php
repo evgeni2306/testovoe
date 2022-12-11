@@ -33,7 +33,7 @@ class ProductController extends Controller
 
     public function actionIndex(): string
     {
-        $models = Product::getAll();
+        $models = Product::find()->with(['tags'])->all();
         return $this->render('index', [
             'models' => $models,
         ]);
