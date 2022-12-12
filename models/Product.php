@@ -13,10 +13,10 @@ class Product extends ActiveRecord
     const SCENARIO_CREATE = 'create';
     const SCENARIO_UPDATE = 'update';
 
-    public $name;
-    public $price;
-//    public $tag;
-//    public $scenario;
+//    public $name;
+//    public $price;
+//    public $tags;
+////    public $scenario;
 
     public static function tableName(): string
     {
@@ -26,9 +26,10 @@ class Product extends ActiveRecord
     public function rules(): array
     {
         return [
+//            ['tags', 'each', 'rule' => ['integer']],
             ['name', 'string'],
             ['price', 'integer'],
-            [['name', 'price'], 'required']
+            [['name', 'price','tags'], 'required']
 //            ['name', 'string','on'=>self::SCENARIO_CREATE],
 //            ['price', 'integer','on'=>self::SCENARIO_CREATE],
 //            [['name', 'price'], 'required','on'=>self::SCENARIO_CREATE],

@@ -17,7 +17,9 @@ class ProductTag extends  ActiveRecord
     public function rules(): array
     {
         return [
-            [['product_id','tag_id'],'integer','required']
+            ['product_id', 'integer'],
+            ['tag_id', 'integer'],
+            [['tag_id', 'product_id'], 'required']
 
         ];
     }

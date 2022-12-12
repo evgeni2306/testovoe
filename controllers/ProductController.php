@@ -7,12 +7,14 @@ namespace app\controllers;
 use app\models\Product;
 
 use app\models\ProductSearch;
+use app\models\ProductTag;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use function Codeception\Lib\Console\with;
+use function Codeception\Lib\load;
 
 
 class ProductController extends Controller
@@ -52,15 +54,19 @@ class ProductController extends Controller
     {
 //        $this->enableCsrfValidation = false;
         if ($this->request->isPost) {
-            dd(Yii::$app->request->post());
             $model = new Product(['scenario' => Product::SCENARIO_CREATE]);
             $model->load(Yii::$app->request->post());
-            dd($model);
+
             if ($model->validate()) {
                 $model->save();
+                $tags = Yii::$app->request->post()['Product']['tags'];
+                foreach($tags as $tag){
+                    $t = new ProductTag(['product_id'=>$model->id,'tag_id'=>$tag]);
+                    $t->save();
+                }
             }
 
-            dd($model->price);
+            dd($model->id);
         }
         $model = new Product();
         return $this->render('create', [
