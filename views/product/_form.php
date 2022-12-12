@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Tag;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -17,6 +19,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
+    <?= $form->field($model, 'tags')->checkboxList(ArrayHelper::map(Tag::find()->all(), 'id', 'name')) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Cохранить', ['class' => 'btn btn-success']) ?>

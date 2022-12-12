@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use function Codeception\Lib\Console\with;
 
 
 class ProductController extends Controller
@@ -47,21 +48,33 @@ class ProductController extends Controller
 
     }
 
-    public function actionCreate(): string|Response
+    public function actionCreate()
     {
-        $model = new Product();
-
+//        $this->enableCsrfValidation = false;
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            dd(Yii::$app->request->post());
+            $model = new Product(['scenario' => Product::SCENARIO_CREATE]);
+            $model->load(Yii::$app->request->post());
+            dd($model);
+            if ($model->validate()) {
+                $model->save();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
+            dd($model->price);
+        }
+        $model = new Product();
         return $this->render('create', [
             'model' => $model,
         ]);
+//            if ($model->load($this->request->post()) && $model->save()) {
+//                dd($model);
+//                return $this->redirect(['view', 'id' => $model->id]);
+//            }
+//        } else {
+//            $model->loadDefaultValues();
+//        }
+
+
     }
 
     public function actionUpdate($id): string|Response
