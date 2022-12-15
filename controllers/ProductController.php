@@ -100,9 +100,10 @@ class ProductController extends Controller
 
     public function actionDelete($id): Response
     {
-
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        if ($model->deleteTags()) {
+            $this->findModel($id)->delete();
+        }
         return $this->redirect(['index']);
     }
 

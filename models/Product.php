@@ -24,7 +24,7 @@ class Product extends ActiveRecord
         return [
             ['name', 'string'],
             ['price', 'integer'],
-            [['name', 'price','tags'], 'required']
+            [['name', 'price', 'tags'], 'required']
         ];
     }
 
@@ -37,11 +37,17 @@ class Product extends ActiveRecord
 
 
 // для валидации сделать сценарии, тогда и поиск сюда и обновление и проч
-    public function getTags()
+    public function getTags(): \yii\db\ActiveQuery
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
             ->viaTable('producttags', ['product_id' => 'id']);
     }
 
-
+    public function deleteTags():int
+    {
+        if (ProductTag::findAll(['product_id' => $this->id]) != null) {
+            return ProductTag::deleteAll(['product_id' => $this->id]);
+        }
+        return 1;
+    }
 }
