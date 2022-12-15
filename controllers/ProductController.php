@@ -9,12 +9,11 @@ use app\models\Product;
 use app\models\ProductSearch;
 use app\models\ProductTag;
 use Yii;
+use yii\db\ActiveRecord;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use function Codeception\Lib\Console\with;
-use function Codeception\Lib\load;
 
 
 class ProductController extends Controller
@@ -50,22 +49,19 @@ class ProductController extends Controller
 
     }
 
-    public function actionCreate():string
+    public function actionCreate(): string
     {
         if ($this->request->isPost) {
             $model = new Product(['scenario' => Product::SCENARIO_CREATE]);
             $model->load(Yii::$app->request->post());
-
             if ($model->validate()) {
                 $model->save();
                 $tags = Yii::$app->request->post()['Product']['tags'];
-                foreach($tags as $tag){
-                    $t = new ProductTag(['product_id'=>$model->id,'tag_id'=>$tag]);
+                foreach ($tags as $tag) {
+                    $t = new ProductTag(['product_id' => $model->id, 'tag_id' => $tag]);
                     $t->save();
                 }
             }
-
-            dd($model->id);
         }
         $model = new Product();
         return $this->render('create', [
@@ -113,10 +109,10 @@ class ProductController extends Controller
 
     protected function findModel($id): Product
     {
-        if (($model = Product::findOne(['id' => $id])) !== null) {
+        $model = Product::find()->with(['tags'])->where(['id' => $id])->one();
+        if ($model != null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

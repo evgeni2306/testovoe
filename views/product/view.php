@@ -10,6 +10,7 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$this->registerCssFile("@web/css/product.css", [], 'css-print-theme');
 ?>
 <div class="product-view">
 
@@ -26,14 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'price',
-            'tags.name'
-        ],
-    ]) ?>
+
+        <div class="grid">
+            <div class="gridItem"><?= Html::encode($model['id']) ?></div>
+            <div class="gridItem"><?= Html::encode($model['name']) ?></div>
+            <div class="gridItem"><?= Html::encode($model['price']) . ' Р' ?></div>
+            <div class="gridItem gridTag ">
+                <? foreach ($model['tags'] as $tag) { ?>
+                    <div class='tag'><? echo $tag['name'] ?></div>
+                <? } ?>
+
+            </div>
+
+        </div>
 
 </div>
