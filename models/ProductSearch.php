@@ -18,7 +18,7 @@ class ProductSearch extends Model
     public function rules(): array
     {
         return [
-            [['name', 'tag'], 'integer'],
+            [['name', 'tag'], 'string'],
             [['id', 'price'], 'integer'],
 
         ];

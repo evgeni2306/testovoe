@@ -13,10 +13,6 @@ class Product extends ActiveRecord
     const SCENARIO_CREATE = 'create';
     const SCENARIO_UPDATE = 'update';
 
-//    public $name;
-//    public $price;
-//    public $tags;
-////    public $scenario;
 
     public static function tableName(): string
     {
@@ -26,16 +22,9 @@ class Product extends ActiveRecord
     public function rules(): array
     {
         return [
-//            ['tags', 'each', 'rule' => ['integer']],
             ['name', 'string'],
             ['price', 'integer'],
             [['name', 'price','tags'], 'required']
-//            ['name', 'string','on'=>self::SCENARIO_CREATE],
-//            ['price', 'integer','on'=>self::SCENARIO_CREATE],
-//            [['name', 'price'], 'required','on'=>self::SCENARIO_CREATE],
-//            ['price', 'integer', 'on' => self::SCENARIO_UPDATE],
-//            ['price', 'integer', 'on' => self::SCENARIO_CREATE]
-
         ];
     }
 
@@ -46,13 +35,6 @@ class Product extends ActiveRecord
         return $scenarios;
     }
 
-
-//
-//    public function saveProduct()
-//    {
-//        $posts = Yii::$app->db->createCommand('INSERT INTO products(name,price) VALUES(' . '"'.$this->name. '"' . ',' . $this->price . ')')
-//            ->query();
-//    }
 
 // для валидации сделать сценарии, тогда и поиск сюда и обновление и проч
     public function getTags()

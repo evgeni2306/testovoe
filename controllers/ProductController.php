@@ -50,9 +50,8 @@ class ProductController extends Controller
 
     }
 
-    public function actionCreate()
+    public function actionCreate():string
     {
-//        $this->enableCsrfValidation = false;
         if ($this->request->isPost) {
             $model = new Product(['scenario' => Product::SCENARIO_CREATE]);
             $model->load(Yii::$app->request->post());
@@ -72,15 +71,6 @@ class ProductController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
-//            if ($model->load($this->request->post()) && $model->save()) {
-//                dd($model);
-//                return $this->redirect(['view', 'id' => $model->id]);
-//            }
-//        } else {
-//            $model->loadDefaultValues();
-//        }
-
-
     }
 
     public function actionUpdate($id): string|Response
