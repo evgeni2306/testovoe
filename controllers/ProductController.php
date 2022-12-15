@@ -56,7 +56,7 @@ class ProductController extends Controller
             $model->load(Yii::$app->request->post());
             if ($model->validate()) {
                 $model->save();
-                $tags = Yii::$app->request->post()['Product']['tags'];
+                $tags = Yii::$app->request->post()['Product']['tg'];
                 foreach ($tags as $tag) {
                     $t = new ProductTag(['product_id' => $model->id, 'tag_id' => $tag]);
                     $t->save();
@@ -72,9 +72,16 @@ class ProductController extends Controller
     public function actionUpdate($id): string|Response
     {
         $model = $this->findModel($id);
+        $model->tg = $model->tags;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post()) ) {
+            $model->save();
+            if ($model->deleteTags()) {
+                foreach ($model->tg as $tag) {
+                    $t = new ProductTag(['product_id' => $model->id, 'tag_id' => $tag]);
+                    $t->save();
+                }
+            }
         }
 
         return $this->render('update', [

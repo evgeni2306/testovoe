@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace app\models;
 
-
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
 
 class Tag extends  ActiveRecord
@@ -23,8 +20,4 @@ class Tag extends  ActiveRecord
         ];
     }
 
-//    public function getTags()
-//    {
-//return $this->hasMany()
-//    }
 }

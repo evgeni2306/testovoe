@@ -13,6 +13,7 @@ class Product extends ActiveRecord
     const SCENARIO_CREATE = 'create';
     const SCENARIO_UPDATE = 'update';
 
+    public $tg;
 
     public static function tableName(): string
     {
@@ -24,7 +25,7 @@ class Product extends ActiveRecord
         return [
             ['name', 'string'],
             ['price', 'integer'],
-            [['name', 'price', 'tags'], 'required']
+            [['name', 'price', 'tg'], 'required']
         ];
     }
 
@@ -43,7 +44,7 @@ class Product extends ActiveRecord
             ->viaTable('producttags', ['product_id' => 'id']);
     }
 
-    public function deleteTags():int
+    public function deleteTags(): int
     {
         if (ProductTag::findAll(['product_id' => $this->id]) != null) {
             return ProductTag::deleteAll(['product_id' => $this->id]);
