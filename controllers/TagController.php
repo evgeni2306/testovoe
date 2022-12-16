@@ -8,11 +8,12 @@ use app\models\TagSearch;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 
 class TagController extends Controller
 {
-    public function behaviors()
+    public function behaviors():array
     {
         return array_merge(
             parent::behaviors(),
@@ -27,7 +28,7 @@ class TagController extends Controller
         );
     }
 
-    public function actionIndex()
+    public function actionIndex():string
     {
         $searchModel = new TagSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -38,14 +39,14 @@ class TagController extends Controller
         ]);
     }
 
-    public function actionView($id)
+    public function actionView($id):string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         $model = new Tag();
 
@@ -62,7 +63,7 @@ class TagController extends Controller
         ]);
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate($id): Response|string
     {
         $model = $this->findModel($id);
 
@@ -75,7 +76,7 @@ class TagController extends Controller
         ]);
     }
 
-    public function actionDelete($id)
+    public function actionDelete($id):Response
     {
 
         $this->findModel($id)->delete();
@@ -84,7 +85,7 @@ class TagController extends Controller
     }
 
 
-    protected function findModel($id)
+    protected function findModel($id):Tag
     {
         if (($model = Tag::findOne(['id' => $id])) !== null) {
             return $model;

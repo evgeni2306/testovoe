@@ -28,9 +28,5 @@ class m221105_150601_create_tags_table extends Migration
     public function safeDown(): void
     {
         $this->dropTable(self::TABLE_NAME);
-//        $this->dropForeignKey(
-//            'creator_id',
-//            'users'
-//        );
     }
 }

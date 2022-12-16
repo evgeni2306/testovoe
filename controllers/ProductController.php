@@ -7,9 +7,7 @@ namespace app\controllers;
 use app\models\Product;
 
 use app\models\ProductSearch;
-use app\models\ProductTag;
 use Yii;
-use yii\db\ActiveRecord;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -57,10 +55,8 @@ class ProductController extends Controller
             if ($model->validate()) {
                 $model->save();
                 $tags = Yii::$app->request->post()['Product']['tg'];
-                foreach ($tags as $tag) {
-                    $t = new ProductTag(['product_id' => $model->id, 'tag_id' => $tag]);
-                    $t->save();
-                }
+                $model->addTags($tags);
+                return $this->actionView($model->id);
             }
         }
         $model = new Product();
@@ -74,13 +70,11 @@ class ProductController extends Controller
         $model = $this->findModel($id);
         $model->tg = $model->tags;
 
-        if ($this->request->isPost && $model->load($this->request->post()) ) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
             $model->save();
             if ($model->deleteTags()) {
-                foreach ($model->tg as $tag) {
-                    $t = new ProductTag(['product_id' => $model->id, 'tag_id' => $tag]);
-                    $t->save();
-                }
+                $model->addTags($model->tg);
+                return $this->actionView($model->id);
             }
         }
 

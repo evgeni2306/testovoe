@@ -12,7 +12,7 @@ class TagSearch extends Tag
     {
         return [
             ['name', 'string'],
-            ['name',  'safe'],
+            ['name', 'safe'],
 
         ];
     }
@@ -20,9 +20,6 @@ class TagSearch extends Tag
     public function search($params): ActiveDataProvider
     {
         $query = self::find();
-
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -30,15 +27,8 @@ class TagSearch extends Tag
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
-
-//        поиск слово-в-слово
-//        $query->andFilterWhere([
-//            'price' => $this->price,
-//        ]);
 
         $query->andFilterWhere(['like', 'id', $this->id])
             ->andFilterWhere(['like', 'name', $this->name]);

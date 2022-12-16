@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace app\models;
 
-use Yii;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 class Product extends ActiveRecord
@@ -29,7 +27,7 @@ class Product extends ActiveRecord
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         $scenarios = parent::scenarios();
         $scenarios['create'] = ['name', 'price'];
@@ -38,7 +36,7 @@ class Product extends ActiveRecord
 
 
 // для валидации сделать сценарии, тогда и поиск сюда и обновление и проч
-    public function getTags(): \yii\db\ActiveQuery
+    public function getTags(): ActiveQuery
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
             ->viaTable('producttags', ['product_id' => 'id']);
@@ -50,5 +48,13 @@ class Product extends ActiveRecord
             return ProductTag::deleteAll(['product_id' => $this->id]);
         }
         return 1;
+    }
+
+    public function addTags(array $tags):void
+    {
+        foreach ($tags as $tag) {
+            $productTag = new ProductTag(['product_id' => $this->id, 'tag_id' => $tag]);
+            $productTag->save();
+        }
     }
 }

@@ -3,10 +3,7 @@ declare(strict_types=1);
 
 namespace app\models;
 
-
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
-use yii\db\ActiveRecord;
 
 class ProductSearch extends Model
 {
