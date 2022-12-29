@@ -39,7 +39,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionView($id): string
+    public function actionView(int $id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -65,7 +65,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionUpdate($id): string|Response
+    public function actionUpdate(int $id): string|Response
     {
         $model = $this->findModel($id);
         $model->tg = $model->tags;
@@ -85,21 +85,20 @@ class ProductController extends Controller
 
     public function actionSearch(): string
     {
-        $get = Yii::$app->request->get();
         $model = new ProductSearch();
-        $model->attributes = $get;
-        $products = [];
+        $model->attributes = Yii::$app->request->get();
+        $results = [];
         if ($model->validate()) {
-            $products = $model->searchProduct();
+            $results = $model->searchProduct();
         }
         return $this->render('index', [
-            'models' => $products,
+            'models' => $results,
         ]);
 
 
     }
 
-    public function actionDelete($id): Response
+    public function actionDelete(int $id): Response
     {
         $model = $this->findModel($id);
         if ($model->deleteTags()) {
@@ -109,7 +108,7 @@ class ProductController extends Controller
     }
 
 
-    protected function findModel($id): Product
+    protected function findModel(int $id): Product
     {
         $model = Product::find()->with(['tags'])->where(['id' => $id])->one();
         if ($model != null) {
