@@ -13,6 +13,7 @@ class Product extends ActiveRecord
 
     public $tg;
 
+    //Сделал поиск отдельным классом, т.к возникала проблема с несуществующими в таблице переменными тега
     public static function tableName(): string
     {
         return 'products';
